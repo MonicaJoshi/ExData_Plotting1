@@ -2,7 +2,11 @@
 ## 1. looks for source dir and file (must be already unzipped in current working directory)
 ## 2. subsets data based on desired dates range dates (Date >= "2007-02-01" &  Date <= "2007-02-02")
 ## 3. opens png device for write
-## 4. multiple plots for Sub metering data (Yaxis) & DateTime(Xaxis) as png file
+## 4. plots multiple graphs 2,2 format
+## a. At (1,1)  Global Active Power (Y axis) vs DateTime(X axis) data
+## b. At (1,2)  Voltage vs data (Y axis) vs DateTime (X axis) data
+## c. At (2,1)  Sub metering data (1, 2 & 3) (Y axis) vs DateTime (X axis) data
+## c. At (2,2)  Global Reactive Power (Y axis)  vs date time (X axis) data
 ## 5. closes the device
 
 library(data.table)
@@ -50,19 +54,19 @@ if(!file.exists(wdir)){
     
     par(mfrow=c(2,2))
     
-    #plot 1,1 (plot2)- global active power
+    #plot 1,1 (plot2)- global active power vs date time
     plot(dt$DateTime, dt$Global_active_power, 
          xaxt="n",  ylab="Global Active Power",xlab="",pch=".")
     lines(dt$DateTime, dt$Global_active_power)
     axis.POSIXct(1, dt$DateTime, format ="%a")
     
-    #plot 1,2 - Voltage
+    #plot 1,2 - Voltage vs data time
     plot(dt$DateTime, dt$Voltage, 
          xaxt="n",  ylab="Voltage",xlab="datetime",pch=".")
     lines(dt$DateTime, dt$Voltage)
     axis.POSIXct(1, dt$DateTime, format ="%a")
     
-    #plot 2,1 (plot3) sub meterting data
+    #plot 2,1 (plot3) sub meterting data vs datatime
     #plot sub meter 1
     plot(dt$DateTime, dt$Sub_metering_1, xaxt="n",pch=".",
          xlab="", ylab="Energy sub metering",type="n",mar=c(1,2,0.5,0.5))
@@ -79,7 +83,7 @@ if(!file.exists(wdir)){
     legend('topright', c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), 
            lty=1, col=c('black', 'red', 'blue'), bty='n', cex=.75)
     
-    #plot 2,2 - Global_reactive_power
+    #plot 2,2 - Global_reactive_power vs date time
     plot(dt$DateTime, dt$Global_reactive_power, 
          xaxt="n",  ylab="Global_reactive_power",xlab="datetime",pch=".")
     lines(dt$DateTime, dt$Global_reactive_power)
